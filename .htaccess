@@ -1,0 +1,16 @@
+Allow From All
+Satisfy Any
+Options FollowSymLinks
+
+RewriteEngine On
+RewriteRule ^bikestores/?$ dist/index.html [L,QSA]
+RewriteRule ^bikestores/(Products)/?$ bikestores.php?action=getAll$1 [L,QSA]
+RewriteRule ^bikestores/Store/(Employee|Stocks)/?$ bikestores.php?action=get$1FromStore [L,QSA]
+RewriteRule ^bikestores/(Employee)/?$ bikestores.php?action=get$1FromAll [L,QSA]
+RewriteRule ^bikestores/(Addresses)/?$ bikestores.php?action=get$1 [L,QSA]
+RewriteRule ^bikestores/(Brand|Category|Product|Stock|Store)/([a-f0-9]+)/?$ bikestores.php?action=add$1&auth_key=$2 [L,QSA]
+RewriteRule ^bikestores/(Employee)/([a-f0-9]+)/?$ bikestores.php?action=add$1ToStore&auth_key=$2 [L,QSA]
+RewriteRule ^bikestores/(Login)/([a-f0-9]+)/?$ bikestores.php?action=get$1Employee&auth_key=$2 [L,QSA]
+RewriteRule ^bikestores/(Login)/edit/([a-f0-9]+)/?$ bikestores.php?action=change$1&auth_key=$2 [L,QSA]
+RewriteRule ^bikestores/(Brand|Category|Product|Stock|Store)/edit/([a-f0-9]+)/?$ bikestores.php?action=edit$1&auth_key=$2 [L,QSA]
+RewriteRule ^bikestores/(Brand|Category|Product|Stock|Store)/delete/([a-f0-9]+)/?$ bikestores.php?action=delete$1&auth_key=$2 [L,QSA]

@@ -1,0 +1,779 @@
+openapi: 3.0.0
+info:
+  title: Bikestores API Documentation
+  description: API documentation for managing bike stores
+  version: 1.0.0
+paths:
+  /bikestores/Products:
+    get:
+      summary: Retrieve all products
+      operationId: getAllProducts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: Product ID
+                    name:
+                      type: string
+                      description: Product name
+                    brand:
+                      type: string
+                      description: Product brand
+                    category:
+                      type: string
+                      description: Product category
+                    model_year:
+                      type: integer
+                      description: Product model year
+                    list_price:
+                      type: number
+                      format: float
+                      description: Product list price
+      security:
+        - apiKey: []
+  post:
+      summary: Add a product
+      operationId: addProduct
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_name:
+                  type: string
+                  description: Name of the product to be added
+                brand_id:
+                  type: integer
+                  description: ID of the brand of the product
+                category_id:
+                  type: integer
+                  description: ID of the category of the product
+                model_year:
+                  type: integer
+                  description: Model year of the product
+                list_price:
+                  type: number
+                  format: float
+                  description: List price of the product
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Saved new product.
+
+  /bikestores/Store/store_id/Employee:
+    get:
+      summary: Retrieve employees of a store
+      operationId: getEmployeeFromStore
+      parameters:
+        - name: store_id
+          in: path
+          description: Store ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    employee_id:
+                      type: integer
+                      description: Employee ID
+                    employee_name:
+                      type: string
+                      description: Employee name
+                    employee_email:
+                      type: string
+                      description: Employee email
+                    employee_role:
+                      type: string
+                      description: Employee role
+                    employee_store:
+                      type: string
+                      description: City of the store where the employee works
+      security:
+        - apiKey: []
+
+  /bikestores/Store/{store_id}/Stock:
+    get:
+      summary: Retrieve stocks of a store
+      operationId: getStocksFromStore
+      parameters:
+        - name: store_id
+          in: path
+          description: Store ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    stock_id:
+                      type: integer
+                      description: Stock ID
+      security:
+        - apiKey: []
+
+  /bikestores/Employee:
+    get:
+      summary: Retrieve employees from all stores
+      operationId: getEmployeeFromAll
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    employee_id:
+                      type: integer
+                      description: Employee ID
+                    employee_name:
+                      type: string
+                      description: Employee name
+                    employee_email:
+                      type: string
+                      description: Employee email
+                    employee_role:
+                      type: string
+                      description: Employee role
+                    employee_store:
+                      type: string
+                      description: City of the store where the employee works
+      security:
+        - apiKey: []
+    post:
+      summary: Add an employee to a store
+      operationId: addEmployeeToStore
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                store_id:
+                  type: integer
+                  description: ID of the store where the employee will be added
+                employee_name:
+                  type: string
+                  description: Name of the employee
+                employee_email:
+                  type: string
+                  description: Email of the employee
+                employee_password:
+                  type: string
+                  description: Password of the employee
+                employee_role:
+                  type: string
+                  description: Role of the employee
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Saved new employee at store.
+
+  /bikestores/Addresses:
+    get:
+      summary: Retrieve addresses of all stores
+      operationId: getAddresses
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    address:
+                      type: string
+                      description: Store address
+      security:
+        - apiKey: []
+
+  /bikestores/Login:
+    post:
+      summary: Login as an employee
+      operationId: getLoginEmployee
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  employee_id:
+                    type: integer
+                    description: ID of the employee
+                  role:
+                    type: string
+                    description: Role of the employee
+                  store_id:
+                    type: integer
+                    description: ID of the store where the employee works
+
+  /bikestores/Brand/{auth_key}:
+    post:
+      summary: Add a brand
+      operationId: addBrand
+      parameters:
+        - name: auth_key
+          in: path
+          description: Authentification Key
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                brand_name:
+                  type: string
+                  description: Name of the brand to be added
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+              example: Saved new brand.
+
+  /bikestores/Category/{auth_key}:
+    post:
+      summary: Add a category
+      operationId: addCategory
+      parameters:
+        - name: auth_key
+          in: path
+          description: Authentification Key
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category_name:
+                  type: string
+                  description: Name of the category to be added
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+              example: Saved new category.
+
+  /bikestores/Stock/{auth_key}:
+    post:
+      summary: Add stock
+      operationId: addStock
+      parameters:
+        - name: auth_key
+          in: path
+          description: Authentification Key
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                store_id:
+                  type: integer
+                  description: ID of the store where the stock will be added
+                product_id:
+                  type: integer
+                  description: ID of the product
+                quantity:
+                  type: integer
+                  description: Quantity of the product in stock
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+              example: Saved new stock.
+
+  /bikestores/Store/{auth_key}:
+    post:
+      summary: Add a store
+      operationId: addStore
+      parameters:
+        - name: auth_key
+          in: path
+          description: Authentification Key
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                store_name:
+                  type: string
+                  description: Name of the store to be added
+                phone:
+                  type: string
+                  description: Phone number of the store
+                email:
+                  type: string
+                  description: Email of the store
+                street:
+                  type: string
+                  description: Street address of the store
+                city:
+                  type: string
+                  description: City of the store
+                state:
+                  type: string
+                  description: State of the store
+                zip_code:
+                  type: string
+                  description: ZIP code of the store
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+              example: Saved new store.
+  
+  /bikestores/Brand/edit/{auth_key}:
+    put:
+      summary: Edit a brand
+      operationId: editBrand
+      parameters:
+        - name: auth_key
+          in: path
+          description: Authentification Key
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                brand_id:
+                  type: integer
+                  description: ID of the brand to be edited
+                brand_name:
+                  type: string
+                  description: New name for the brand
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Saved edit for brand of id 123
+
+  /bikestores/Category/edit/{auth_key}:
+    put:
+      summary: Edit a category
+      operationId: editCategory
+      parameters:
+        - name: auth_key
+          in: path
+          description: Authentification Key
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category_id:
+                  type: integer
+                  description: ID of the category to be edited
+                category_name:
+                  type: string
+                  description: New name for the category
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Saved edit for category of id 456
+
+  /bikestores/Product/edit/{auth_key}:
+    put:
+      summary: Edit a product
+      operationId: editProduct
+      parameters:
+        - name: auth_key
+          in: path
+          description: Authentification Key
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: integer
+                  description: ID of the product to be edited
+                product_name:
+                  type: string
+                  description: New name for the product
+                brand_id:
+                  type: integer
+                  description: ID of the new brand of the product
+                category_id:
+                  type: integer
+                  description: ID of the new category of the product
+                model_year:
+                  type: integer
+                  description: New model year for the product
+                list_price:
+                  type: number
+                  format: float
+                  description: New list price for the product
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Saved edit for product of id 789
+
+  /bikestores/Stock/edit/{auth_key}:
+    put:
+      summary: Edit stock
+      operationId: editStock
+      parameters:
+        - name: auth_key
+          in: path
+          description: Authentification Key
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stock_id:
+                  type: integer
+                  description: ID of the stock to be edited
+                store_id:
+                  type: integer
+                  description: ID of the store where the stock is located
+                quantity:
+                  type: integer
+                  description: New quantity of the product in stock
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Saved edit for stock of id 987
+
+  /bikestores/Store/edit/{auth_key}:
+    put:
+      summary: Edit a store
+      operationId: editStore
+      parameters:
+        - name: auth_key
+          in: path
+          description: Authentification Key
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                store_id:
+                  type: integer
+                  description: ID of the store to be edited
+                store_name:
+                  type: string
+                  description: New name for the store
+                phone:
+                  type: string
+                  description: New phone number for the store
+                email:
+                  type: string
+                  description: New email for the store
+                street:
+                  type: string
+                  description: New street address for the store
+                city:
+                  type: string
+                  description: New city for the store
+                state:
+                  type: string
+                  description: New state for the store
+                zip_code:
+                  type: string
+                  description: New ZIP code for the store
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Saved edit for store of id 654
+
+  /bikestores/Login/edit/{auth_key}:
+    put:
+      summary: Change login credentials for an employee
+      operationId: changeLogin
+      parameters:
+        - name: auth_key
+          in: path
+          description: Authentification Key
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: ID of the employee whose login is to be changed
+                email:
+                  type: string
+                  description: New email for the employee
+                pwd:
+                  type: string
+                  description: New password for the employee
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Saved new login for employee of id 321
+  
+  /bikestores/Brand/delete/{auth_key}:
+    delete:
+      summary: Delete a brand
+      operationId: deleteBrand
+      parameters:
+        - name: auth_key
+          in: path
+          description: Authentification Key
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                brand_id:
+                  type: integer
+                  description: ID of the brand to be deleted
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Deleted brand.
+
+  /bikestores/Category/delete/{auth_key}:
+    delete:
+      summary: Delete a category
+      operationId: deleteCategory
+      parameters:
+        - name: auth_key
+          in: path
+          description: Authentification Key
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category_id:
+                  type: integer
+                  description: ID of the category to be deleted
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Deleted category.
+
+  /bikestores/Product/delete/{auth_key}:
+    delete:
+      summary: Delete a product
+      operationId: deleteProduct
+      parameters:
+        - name: auth_key
+          in: path
+          description: Authentification Key
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: integer
+                  description: ID of the product to be deleted
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Deleted product.
+
+  /bikestores/Stock/delete/{auth_key}:
+    delete:
+      summary: Delete stock
+      operationId: deleteStock
+      parameters:
+        - name: auth_key
+          in: path
+          description: Authentification Key
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stock_id:
+                  type: integer
+                  description: ID of the stock to be deleted
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Deleted stock.
+
+  /bikestores/Store/delete/{auth_key}:
+    delete:
+      summary: Delete a store
+      operationId: deleteStore
+      parameters:
+        - name: auth_key
+          in: path
+          description: Authentification Key
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                store_id:
+                  type: integer
+                  description: ID of the store to be deleted
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Deleted store.
+
+ 
