@@ -22,11 +22,16 @@
     $method = $_SERVER["REQUEST_METHOD"];
     switch($method) {
         case "GET" :
+            /**
+             * Send error response in JSON format.
+             * 
+             * @param string $message The error message to be sent.
+             * @return void
+             */
             function sendError($message) {
                 echo json_encode(array("error" => $message));
                 exit();
             } try {
-                //voir tous les produits
                 if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="getAllProducts") {
                     $produits = $productsRepository->findAll();
                     foreach ($produits as $produit) {
@@ -42,7 +47,6 @@
                     echo json_encode($response);
                 }
                 
-                //consulter les employés d'un magasin
                 else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="getEmployeeFromStore") {
                     $store_id = $_REQUEST["store_id"];
                     $employees = $employeesRepository->findBy(["store_id"=>$store_id]);
@@ -58,7 +62,6 @@
                     echo json_encode($response);
                 }
 
-                //consulter les stocks d'un magasin
                 else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="getStocksFromStore") {
                     $store_id = $_REQUEST["store_id"];
                     $stocks = $stocksRepository->findBy(["store_id"=>$store_id]);
@@ -70,7 +73,6 @@
                     echo json_encode($response);
                 }
 
-                //consulter les employés de tous les magasins
                 else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="getEmployeeFromAll") {
                     $employees = $employeesRepository->findAll();
                     foreach ($employees as $employee) {
@@ -85,7 +87,6 @@
                     echo json_encode($response);
                 }
 
-                //consulter les employés de tous les magasins
                 else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="getAddresses") {
                     $stores = $storesRepository->findAll();
                     foreach ($stores as $store) {
@@ -96,40 +97,23 @@
                     echo json_encode($response);
                 }
 
-                /*//avoir l'it selon le mot de passe et le mail
-                else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="getLoginIt") {
-                    $stores = $storesRepository->findAll();
-                    foreach ($stores as $store) {
-                        $response[] = array(
-                            "addresse" => $store->getCity(),
-                        );
-                    } 
-                    echo json_encode($response);
-                }
-
-                //avoir le chef selon le mot de passe et le mail
-                else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="getLoginChief") {
-                    $stores = $storesRepository->findAll();
-                    foreach ($stores as $store) {
-                        $response[] = array(
-                            "addresse" => $store->getCity(),
-                        );
-                    } 
-                    echo json_encode($response);
-                }*/
             } catch (Exception $e) {
                 sendError($e->getMessage());
             }
             break;
         case "POST" :
+            /**
+             * Send error response in JSON format.
+             * 
+             * @param string $message The error message to be sent.
+             * @return void
+             */
             function sendError($message) {
                 echo json_encode(array("error" => $message));
                 exit();
             } try {
                 if (isset($_REQUEST["auth_key"]) && $_REQUEST["auth_key"] == "e8f1997c763") {
-                    //ajouter un employé à un magasin
                     if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="addEmployeeToStore") {
-                        //verif champs pas vide
                         $required_fields = ["store_id", "employee_name", "employee_email", "employee_password", "employee_role"];
                         foreach ($required_fields as $field) {
                             if (empty($_REQUEST[$field])) {
@@ -155,9 +139,7 @@
                         echo json_encode('Saved new employee at store.');
                     }
 
-                    //ajouter une marque
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="addBrand") {
-                        //verif champs pas vide
                         $required_fields = ["brand_name"];
                         foreach ($required_fields as $field) {
                             if (empty($_REQUEST[$field])) {
@@ -174,9 +156,7 @@
                         echo json_encode('Saved new brand.');
                     }
 
-                    //ajouter une catégorie
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="addCategory") {
-                        //verif champs pas vide
                         $required_fields = ["category_name"];
                         foreach ($required_fields as $field) {
                             if (empty($_REQUEST[$field])) {
@@ -193,9 +173,7 @@
                         echo json_encode('Saved new category.');
                     }
 
-                    //ajouter un produit
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="addProduct") {
-                        //verif champs pas vide
                         $required_fields = ["product_name", "brand_id", "category_id", "model_year", "list_price"];
                         foreach ($required_fields as $field) {
                             if (empty($_REQUEST[$field])) {
@@ -222,9 +200,7 @@
                         echo json_encode('Saved new product.');
                     }
 
-                    //ajouter un stock
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="addStock") {
-                        //verif champs pas vide
                         $required_fields = ["store_id", "product_id", "quantity"];
                         foreach ($required_fields as $field) {
                             if (empty($_REQUEST[$field])) {
@@ -247,9 +223,7 @@
                         echo json_encode('Saved new stock.');
                     }
 
-                    //ajouter un magasin
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="addStore") {
-                        //verif champs pas vide
                         $required_fields = ["store_name", "phone", "email","street","city","state","zip_code"];
                         foreach ($required_fields as $field) {
                             if (empty($_REQUEST[$field])) {
@@ -278,7 +252,6 @@
                         echo json_encode('Saved new store.');
                     }
 
-                    //connexion
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="getLoginEmployee") {
                         $email = $_REQUEST["email"];
                         $password = $_REQUEST["password"];
@@ -302,6 +275,12 @@
             break;
             
         case "PUT" :
+            /**
+             * Send error response in JSON format.
+             * 
+             * @param string $message The error message to be sent.
+             * @return void
+             */
             function sendError($message) {
                 echo json_encode(array("error" => $message));
                 exit();
@@ -310,9 +289,7 @@
                 $data = json_decode($json, true);
 
                 if (isset($_REQUEST["auth_key"]) && $_REQUEST["auth_key"] == "e8f1997c763") {
-                    //modifier une marque
                     if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="editBrand") {
-                        //verif champs pas vide
                         $required_fields = ["brand_name", "brand_id"];
                         foreach ($required_fields as $field) {
                             if (empty($data[$field])) {
@@ -328,9 +305,7 @@
                         echo json_encode('Saved edit for brand of id '.$brand->getBrandId());
                     }
 
-                    //modifier une catégorie
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="editCategory") {
-                        //verif champs pas vide
                         $required_fields = ["category_name", "category_id"];
                         foreach ($required_fields as $field) {
                             if (empty($data[$field])) {
@@ -346,9 +321,7 @@
                         echo json_encode('Saved edit for category of id '.$category->getCategoryId());
                     }
 
-                    //modifier un produit
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="editProduct") {
-                        //verif champs pas vide
                         $required_fields = ["product_id", "product_name", "brand_id", "category_id", "model_year", "list_price"];
                         foreach ($required_fields as $field) {
                             if (empty($data[$field])) {
@@ -375,9 +348,7 @@
                         echo json_encode('Saved edit for product of id '.$product->getProductId());
                     }
 
-                    //modifier un stock
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="editStock") {
-                        //verif champs pas vide
                         $required_fields = ["stock_id", "store_id", "quantity"];
                         foreach ($required_fields as $field) {
                             if (empty($data[$field])) {
@@ -396,9 +367,7 @@
                         echo json_encode('Saved edit for stock of id '.$stock->getStockId());
                     }
 
-                    //modifier un magasin
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="editStore") {
-                        //verif champs pas vide
                         $required_fields = ["store_id", "store_name", "phone", "email", "street", "city", "state", "zip_code"];
                         foreach ($required_fields as $field) {
                             if (empty($data[$field])) {
@@ -426,9 +395,7 @@
                         echo json_encode('Saved edit for store of id '.$store->getStoreId());
                     }
 
-                    //modifier un login
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="changeLogin") {
-                        //verif champs pas vide
                         $required_fields = ["id", "email", "pwd"];
                         foreach ($required_fields as $field) {
                             if (empty($data[$field])) {
@@ -454,6 +421,12 @@
             break;
         
         case "DELETE" :
+            /**
+             * Send error response in JSON format.
+             * 
+             * @param string $message The error message to be sent.
+             * @return void
+             */
             function sendError($message) {
                 echo json_encode(array("error" => $message));
                 exit();
@@ -462,9 +435,7 @@
                 $data = json_decode($json, true);
                 
                 if (isset($_REQUEST["auth_key"]) && $_REQUEST["auth_key"] == "e8f1997c763") {
-                    //supprimer une marque
                     if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="deleteBrand") {
-                        //verif champs pas vide
                         $required_fields = ["brand_id"];
                         foreach ($required_fields as $field) {
                             if (empty($data[$field])) {
@@ -479,9 +450,7 @@
                         echo json_encode('Deleted brand.');
                     }
 
-                    //supprimer une catégorie
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="deleteCategory") {
-                        //verif champs pas vide
                         $required_fields = ["category_id"];
                         foreach ($required_fields as $field) {
                             if (empty($data[$field])) {
@@ -496,9 +465,7 @@
                         echo json_encode('Deleted category.');
                     }
 
-                    //supprimer un produit
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="deleteProduct") {
-                        //verif champs pas vide
                         $required_fields = ["product_id"];
                         foreach ($required_fields as $field) {
                             if (empty($data[$field])) {
@@ -513,9 +480,7 @@
                         echo json_encode('Deleted product.');
                     }
 
-                    //supprimer un stock
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="deleteStock") {
-                        //verif champs pas vide
                         $required_fields = ["stock_id"];
                         foreach ($required_fields as $field) {
                             if (empty($data[$field])) {
@@ -530,9 +495,7 @@
                         echo json_encode('Deleted stock.');
                     }
 
-                    //supprimer un magasin
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="deleteStore") {
-                        //verif champs pas vide
                         $required_fields = ["store_id"];
                         foreach ($required_fields as $field) {
                             if (empty($data[$field])) {
