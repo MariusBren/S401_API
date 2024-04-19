@@ -4,7 +4,7 @@ info:
   description: API documentation for managing bike stores
   version: 1.0.0
 paths:
-  /bikestores/Products:
+  /api/Products:
     get:
       summary: Retrieve all products
       operationId: getAllProducts
@@ -74,7 +74,7 @@ paths:
                 type: string
                 example: Saved new product.
 
-  /bikestores/Store/store_id/Employee:
+  /api/Store/store_id/Employee:
     get:
       summary: Retrieve employees of a store
       operationId: getEmployeeFromStore
@@ -113,7 +113,7 @@ paths:
       security:
         - apiKey: []
 
-  /bikestores/Store/{store_id}/Stock:
+  /api/Store/{store_id}/Stock:
     get:
       summary: Retrieve stocks of a store
       operationId: getStocksFromStore
@@ -140,7 +140,7 @@ paths:
       security:
         - apiKey: []
 
-  /bikestores/Employee:
+  /api/Employee:
     get:
       summary: Retrieve employees from all stores
       operationId: getEmployeeFromAll
@@ -205,7 +205,7 @@ paths:
                 type: string
                 example: Saved new employee at store.
 
-  /bikestores/Addresses:
+  /api/Addresses:
     get:
       summary: Retrieve addresses of all stores
       operationId: getAddresses
@@ -225,7 +225,7 @@ paths:
       security:
         - apiKey: []
 
-  /bikestores/Login:
+  /api/Login:
     post:
       summary: Login as an employee
       operationId: getLoginEmployee
@@ -247,7 +247,7 @@ paths:
                     type: integer
                     description: ID of the store where the employee works
 
-  /bikestores/Brand/{auth_key}:
+  /api/Brand/{auth_key}:
     post:
       summary: Add a brand
       operationId: addBrand
@@ -277,7 +277,7 @@ paths:
                 type: string
               example: Saved new brand.
 
-  /bikestores/Category/{auth_key}:
+  /api/Category/{auth_key}:
     post:
       summary: Add a category
       operationId: addCategory
@@ -307,7 +307,7 @@ paths:
                 type: string
               example: Saved new category.
 
-  /bikestores/Stock/{auth_key}:
+  /api/Stock/{auth_key}:
     post:
       summary: Add stock
       operationId: addStock
@@ -343,7 +343,7 @@ paths:
                 type: string
               example: Saved new stock.
 
-  /bikestores/Store/{auth_key}:
+  /api/Store/{auth_key}:
     post:
       summary: Add a store
       operationId: addStore
@@ -391,7 +391,7 @@ paths:
                 type: string
               example: Saved new store.
   
-  /bikestores/Brand/edit/{auth_key}:
+  /api/Brand/edit/{auth_key}:
     put:
       summary: Edit a brand
       operationId: editBrand
@@ -424,7 +424,7 @@ paths:
                 type: string
                 example: Saved edit for brand of id 123
 
-  /bikestores/Category/edit/{auth_key}:
+  /api/Category/edit/{auth_key}:
     put:
       summary: Edit a category
       operationId: editCategory
@@ -457,7 +457,7 @@ paths:
                 type: string
                 example: Saved edit for category of id 456
 
-  /bikestores/Product/edit/{auth_key}:
+  /api/Product/edit/{auth_key}:
     put:
       summary: Edit a product
       operationId: editProduct
@@ -503,7 +503,7 @@ paths:
                 type: string
                 example: Saved edit for product of id 789
 
-  /bikestores/Stock/edit/{auth_key}:
+  /api/Stock/edit/{auth_key}:
     put:
       summary: Edit stock
       operationId: editStock
@@ -539,7 +539,7 @@ paths:
                 type: string
                 example: Saved edit for stock of id 987
 
-  /bikestores/Store/edit/{auth_key}:
+  /api/Store/edit/{auth_key}:
     put:
       summary: Edit a store
       operationId: editStore
@@ -590,7 +590,7 @@ paths:
                 type: string
                 example: Saved edit for store of id 654
 
-  /bikestores/Login/edit/{auth_key}:
+  /api/Login/edit/{auth_key}:
     put:
       summary: Change login credentials for an employee
       operationId: changeLogin
@@ -626,7 +626,7 @@ paths:
                 type: string
                 example: Saved new login for employee of id 321
   
-  /bikestores/Brand/delete/{auth_key}:
+  /api/Brand/delete/{auth_key}:
     delete:
       summary: Delete a brand
       operationId: deleteBrand
@@ -656,7 +656,7 @@ paths:
                 type: string
                 example: Deleted brand.
 
-  /bikestores/Category/delete/{auth_key}:
+  /api/Category/delete/{auth_key}:
     delete:
       summary: Delete a category
       operationId: deleteCategory
@@ -686,7 +686,7 @@ paths:
                 type: string
                 example: Deleted category.
 
-  /bikestores/Product/delete/{auth_key}:
+  /api/Product/delete/{auth_key}:
     delete:
       summary: Delete a product
       operationId: deleteProduct
@@ -716,7 +716,7 @@ paths:
                 type: string
                 example: Deleted product.
 
-  /bikestores/Stock/delete/{auth_key}:
+  /api/Stock/delete/{auth_key}:
     delete:
       summary: Delete stock
       operationId: deleteStock
@@ -746,7 +746,7 @@ paths:
                 type: string
                 example: Deleted stock.
 
-  /bikestores/Store/delete/{auth_key}:
+  /api/Store/delete/{auth_key}:
     delete:
       summary: Delete a store
       operationId: deleteStore
