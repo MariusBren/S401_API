@@ -129,6 +129,14 @@
                 if (isset($_REQUEST["auth_key"]) && $_REQUEST["auth_key"] == "e8f1997c763") {
                     //ajouter un employé à un magasin
                     if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="addEmployeeToStore") {
+                        //verif champs pas vide
+                        $required_fields = ["store_id", "employee_name", "employee_email", "employee_password", "employee_role"];
+                        foreach ($required_fields as $field) {
+                            if (empty($_REQUEST[$field])) {
+                                sendError("Missing or empty field: " . $field);
+                                exit();
+                            }
+                        }
                         $store_id = $_REQUEST["store_id"];
                         $store = $storesRepository->find($store_id);
                         $name = $_REQUEST["employee_name"];
@@ -149,6 +157,14 @@
 
                     //ajouter une marque
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="addBrand") {
+                        //verif champs pas vide
+                        $required_fields = ["brand_name"];
+                        foreach ($required_fields as $field) {
+                            if (empty($_REQUEST[$field])) {
+                                sendError("Missing or empty field: " . $field);
+                                exit();
+                            }
+                        }
                         $name = $_REQUEST["brand_name"];
                         $brand = new Brands();
                         $brand->setBrandId(0);
@@ -160,6 +176,14 @@
 
                     //ajouter une catégorie
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="addCategory") {
+                        //verif champs pas vide
+                        $required_fields = ["category_name"];
+                        foreach ($required_fields as $field) {
+                            if (empty($_REQUEST[$field])) {
+                                sendError("Missing or empty field: " . $field);
+                                exit();
+                            }
+                        }
                         $name = $_REQUEST["category_name"];
                         $category = new Categories();
                         $category->setCategoryId(0);
@@ -171,6 +195,14 @@
 
                     //ajouter un produit
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="addProduct") {
+                        //verif champs pas vide
+                        $required_fields = ["product_name", "brand_id", "category_id", "model_year", "list_price"];
+                        foreach ($required_fields as $field) {
+                            if (empty($_REQUEST[$field])) {
+                                sendError("Missing or empty field: " . $field);
+                                exit();
+                            }
+                        }
                         $name = $_REQUEST["product_name"];
                         $brand_id = $_REQUEST["brand_id"];
                         $brand = $brandsRepository->find($brand_id);
@@ -192,6 +224,14 @@
 
                     //ajouter un stock
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="addStock") {
+                        //verif champs pas vide
+                        $required_fields = ["store_id", "product_id", "quantity"];
+                        foreach ($required_fields as $field) {
+                            if (empty($_REQUEST[$field])) {
+                                sendError("Missing or empty field: " . $field);
+                                exit();
+                            }
+                        }
                         $store_id = $_REQUEST["store_id"];
                         $store = $storesRepository->find($store_id);
                         $product_id = $_REQUEST["product_id"];
@@ -209,6 +249,14 @@
 
                     //ajouter un magasin
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="addStore") {
+                        //verif champs pas vide
+                        $required_fields = ["store_name", "phone", "email","street","city","state","zip_code"];
+                        foreach ($required_fields as $field) {
+                            if (empty($_REQUEST[$field])) {
+                                sendError("Missing or empty field: " . $field);
+                                exit();
+                            }
+                        }
                         $name = $_REQUEST["store_name"];
                         $phone = $_REQUEST["phone"];
                         $email = $_REQUEST["email"];
@@ -264,6 +312,14 @@
                 if (isset($_REQUEST["auth_key"]) && $_REQUEST["auth_key"] == "e8f1997c763") {
                     //modifier une marque
                     if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="editBrand") {
+                        //verif champs pas vide
+                        $required_fields = ["brand_name", "brand_id"];
+                        foreach ($required_fields as $field) {
+                            if (empty($data[$field])) {
+                                sendError("Missing or empty field: " . $field);
+                                exit();
+                            }
+                        }
                         $name = $data["brand_name"];
                         $brand = $brandsRepository->find($data["brand_id"]);
                         $brand->setBrandName($name);
@@ -274,6 +330,14 @@
 
                     //modifier une catégorie
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="editCategory") {
+                        //verif champs pas vide
+                        $required_fields = ["category_name", "category_id"];
+                        foreach ($required_fields as $field) {
+                            if (empty($data[$field])) {
+                                sendError("Missing or empty field: " . $field);
+                                exit();
+                            }
+                        }
                         $name = $data["category_name"];
                         $category = $categoriesRepository->find($data["category_id"]);
                         $category->setCategoryName($name);
@@ -284,6 +348,14 @@
 
                     //modifier un produit
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="editProduct") {
+                        //verif champs pas vide
+                        $required_fields = ["product_id", "product_name", "brand_id", "category_id", "model_year", "list_price"];
+                        foreach ($required_fields as $field) {
+                            if (empty($data[$field])) {
+                                sendError("Missing or empty field: " . $field);
+                                exit();
+                            }
+                        }
                         $product = $productsRepository->find($data["product_id"]);
                         $name = $data["product_name"];
                         $brand_id = $data["brand_id"];
@@ -305,6 +377,14 @@
 
                     //modifier un stock
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="editStock") {
+                        //verif champs pas vide
+                        $required_fields = ["stock_id", "store_id", "quantity"];
+                        foreach ($required_fields as $field) {
+                            if (empty($data[$field])) {
+                                sendError("Missing or empty field: " . $field);
+                                exit();
+                            }
+                        }
                         $stock = $stocksRepository->find($data["stock_id"]);
                         $store_id = $data["store_id"];
                         $store = $storesRepository->find($store_id);
@@ -318,6 +398,14 @@
 
                     //modifier un magasin
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="editStore") {
+                        //verif champs pas vide
+                        $required_fields = ["store_id", "store_name", "phone", "email", "street", "city", "state", "zip_code"];
+                        foreach ($required_fields as $field) {
+                            if (empty($data[$field])) {
+                                sendError("Missing or empty field: " . $field);
+                                exit();
+                            }
+                        }
                         $store = $storesRepository->find($data["store_id"]);
                         $name = $data["store_name"];
                         $phone = $data["phone"];
@@ -340,6 +428,14 @@
 
                     //modifier un login
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="changeLogin") {
+                        //verif champs pas vide
+                        $required_fields = ["id", "email", "pwd"];
+                        foreach ($required_fields as $field) {
+                            if (empty($data[$field])) {
+                                sendError("Missing or empty field: " . $field);
+                                exit();
+                            }
+                        }
                         $employee = $employeesRepository->find($data["id"]);
                         $email = $data["email"];
                         $pwd = $data["pwd"];
@@ -368,6 +464,14 @@
                 if (isset($_REQUEST["auth_key"]) && $_REQUEST["auth_key"] == "e8f1997c763") {
                     //supprimer une marque
                     if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="deleteBrand") {
+                        //verif champs pas vide
+                        $required_fields = ["brand_id"];
+                        foreach ($required_fields as $field) {
+                            if (empty($data[$field])) {
+                                sendError("Missing or empty field: " . $field);
+                                exit();
+                            }
+                        }
                         $brand_id = $data["brand_id"];
                         $brand = $brandsRepository->find($brand_id);
                         $entityManager->remove($brand);
@@ -377,6 +481,14 @@
 
                     //supprimer une catégorie
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="deleteCategory") {
+                        //verif champs pas vide
+                        $required_fields = ["category_id"];
+                        foreach ($required_fields as $field) {
+                            if (empty($data[$field])) {
+                                sendError("Missing or empty field: " . $field);
+                                exit();
+                            }
+                        }
                         $category_id = $data["category_id"];
                         $category = $categoriesRepository->find($category_id);
                         $entityManager->remove($category);
@@ -386,6 +498,14 @@
 
                     //supprimer un produit
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="deleteProduct") {
+                        //verif champs pas vide
+                        $required_fields = ["product_id"];
+                        foreach ($required_fields as $field) {
+                            if (empty($data[$field])) {
+                                sendError("Missing or empty field: " . $field);
+                                exit();
+                            }
+                        }
                         $product_id = $data["product_id"];
                         $product = $productsRepository->find($product_id);
                         $entityManager->remove($product);
@@ -395,6 +515,14 @@
 
                     //supprimer un stock
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="deleteStock") {
+                        //verif champs pas vide
+                        $required_fields = ["stock_id"];
+                        foreach ($required_fields as $field) {
+                            if (empty($data[$field])) {
+                                sendError("Missing or empty field: " . $field);
+                                exit();
+                            }
+                        }
                         $stock_id = $data["stock_id"];
                         $stock = $stocksRepository->find($stock_id);
                         $entityManager->remove($stock);
@@ -404,6 +532,14 @@
 
                     //supprimer un magasin
                     else if(!empty($_REQUEST["action"]) && $_REQUEST["action"]=="deleteStore") {
+                        //verif champs pas vide
+                        $required_fields = ["store_id"];
+                        foreach ($required_fields as $field) {
+                            if (empty($data[$field])) {
+                                sendError("Missing or empty field: " . $field);
+                                exit();
+                            }
+                        }
                         $store_id = $data["store_id"];
                         $store = $storesRepository->find($store_id);
                         $entityManager->remove($store);
